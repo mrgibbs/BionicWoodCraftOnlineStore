@@ -1,3 +1,3 @@
 # BionicWoodCraftOnlineStore
 
-# Project is not finished yet.
+Project is not finished yet.
