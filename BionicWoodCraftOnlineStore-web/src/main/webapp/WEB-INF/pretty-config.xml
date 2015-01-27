@@ -1,0 +1,60 @@
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+	<url-mapping id="browse">
+		<pattern value="/browse/#{/[a-zA-Z0-9-_/]+/pathIdentifier.sourcePath}" />
+                <action>#{pathIdentifier.createList}</action>
+		<view-id value="#{browseController.getBrowsePage}" />                
+	</url-mapping>
+        
+        <url-mapping id="homepage">
+            <pattern value="/home" />
+            <view-id value="/WEB-INF/pages/public/index.xhtml" />
+        </url-mapping>
+        
+        <url-mapping id="product">
+            <pattern value="/product/#{productPageController.urlId}" />
+            <view-id value="#{productPageController.getProductPage}" />
+        </url-mapping>       
+        
+        <url-mapping id="shopping-cart">
+            <pattern value="/cart" />
+            <view-id value="/WEB-INF/pages/public/shopping_cart_page.xhtml" />
+        </url-mapping>
+        
+        <url-mapping id="login">
+            <pattern value="/login" />
+            <view-id value="/WEB-INF/pages/public/login_page.xhtml" />
+        </url-mapping>
+        
+        <url-mapping id="signup">
+            <pattern value="/signup" />
+            <view-id value="/WEB-INF/pages/public/signup_page.xhtml" />
+        </url-mapping>
+                
+        <url-mapping id="admin_orders">
+            <pattern value="/admin/orders/#{ordersManagementController.ordersType}" />
+            <view-id value="/WEB-INF/pages/admin/admin_orders_list.xhtml" />
+            <action>#{ordersManagementController.prepareData()}</action>
+        </url-mapping>
+        
+        <url-mapping id="admin_order">
+            <pattern value="/admin/order/#{adminOrderPageController.orderIdUrl}" />
+            <view-id value="/WEB-INF/pages/admin/admin_order_page.xhtml" />
+            <action>#{adminOrderPageController.prepareData()}</action>
+        </url-mapping>
+        
+        <url-mapping id="addproduct">
+            <pattern value="/admin/addproduct" />
+            <view-id value="/WEB-INF/pages/admin/manage_product.xhtml" />
+        </url-mapping>
+        
+        <url-mapping id="testUpload_1">
+            <pattern value="/testupload" />
+            <view-id value="/index.xhtml" />
+        </url-mapping>
+        
+
+</pretty-config>

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/general_admin.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="additional_meta_data">
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:include src="/WEB-INF/components/admin_components/admin_menu.xhtml"/>
+        <div class="admin-page-general-title">
+            Замовлення номер #{adminOrderPageController.order.id}
+        </div>
+        
+        <div class="product-page-divider">
+        </div>
+        
+        <div class="admin-order-info-section-title">
+            Інформація про замовлення:
+        </div>
+        <div class="admin-order-info-item-wrapper">
+            <span class="admin-order-info-title">
+                Дата оформлення:
+            </span>
+            <span class="admin-order-info-feature">
+                #{adminOrderPageController.order.dateCreated.date}.#{adminOrderPageController.order.dateCreated.month}.#{adminOrderPageController.order.dateCreated.year + 1900}
+            </span>
+        </div>
+        <div class="admin-order-info-item-wrapper">
+            <span class="admin-order-info-title">
+                Час оформлення:
+            </span>
+            <span class="admin-order-info-feature">
+                #{adminOrderPageController.order.dateCreated.hours}:#{adminOrderPageController.order.dateCreated.minutes}
+            </span>
+        </div>
+        <div class="admin-order-info-item-wrapper">
+            <span class="admin-order-info-title">
+                Статус замовлення:
+            </span>
+            <span class="admin-order-info-feature">
+                #{adminOrderPageController.order.orderStatus.labelUkr}
+            </span>
+        </div>
+        <div class="admin-order-info-section-title">
+            Інформація про замовника:
+        </div>
+        <div class="admin-order-info-item-wrapper">
+            <span class="admin-order-info-title">
+                Ім'я:
+            </span>
+            <span class="admin-order-info-feature">
+                #{adminOrderPageController.order.customer.name}
+            </span>
+        </div>
+        <div class="admin-order-info-item-wrapper">
+            <span class="admin-order-info-title">
+                Прізвище:
+            </span>
+            <span class="admin-order-info-feature">
+                #{adminOrderPageController.order.customer.surname}
+            </span>
+        </div>
+        <div class="admin-order-info-item-wrapper">
+            <span class="admin-order-info-title">
+                e-mail:
+            </span>
+            <span class="admin-order-info-feature">
+                #{adminOrderPageController.order.customer.email}
+            </span>
+        </div>
+        <div class="admin-order-info-item-wrapper">
+            <span class="admin-order-info-title">
+                Номер телефону:
+            </span>
+            <span class="admin-order-info-feature">
+                #{adminOrderPageController.order.customer.phone}
+            </span>
+        </div>
+        <div class="admin-order-info-section-title">
+            Перелік товарів:
+        </div>
+        <table class="cart-items-table">
+            <tr class="cart-items-table-header-row">
+                <th class="cart-items-table-number-column">Номер</th>
+                <th class="cart-items-table-product-column">Назва товару</th>
+                <th class="cart-items-table-amount-column">Кількість</th>
+                <th class="cart-items-table-price-column">Ціна за одиницю</th>
+                <th class="cart-items-table-subtotal-price-column">Сума</th>
+
+            </tr>
+            <c:forEach var="line" items="#{adminOrderPageController.order.orderLineList}" varStatus="iter_status">
+                <tr class="cart-items-table-usual-row">
+                
+                    <td class="cart-items-table-number-column">#{iter_status.index + 1}</td>
+                    <td class="cart-items-table-product-column"><a href="#{initParam['app_uri']}/product/#{line.product.id}">#{line.product.name}</a></td>
+                    <td class="cart-items-table-amount-column">#{line.amount}</td>
+                    <td class="cart-items-table-price-column">#{line.productPrice}</td>
+                    <td class="cart-items-table-subtotal-price-column">#{line.amount * line.productPrice}</td>
+
+
+                </tr>
+            </c:forEach>
+        </table>
+        <div class="cart-page-total">
+            <span class="cart-page-total-label">Всього:</span> #{adminOrderPageController.order.totalSum} грн
+        </div>
+        <div class="product-page-divider">
+
+        </div>
+        
+        
+
+        <div class="admin-order-change-status-wrapper">
+            <span>Змінити статус замовлення:</span>
+            <h:form>
+                <h:selectOneMenu value="#{adminOrderPageController.order.orderStatus}">
+                    <f:selectItems value="#{adminOrderPageController.statuses}" var="status" itemValue="#{status}" itemLabel="#{status.labelUkr}"/>
+                </h:selectOneMenu>
+                <h:commandButton action="#{adminOrderPageController.changeOrderStatus()}" value="Підтвердити" class="general-button"/>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

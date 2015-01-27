@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/templates/general_header_footer.xhtml">
+
+    <ui:define name="additional_meta_data">
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="general-container login-container">
+            <div class="general-container-header">
+                <div class="general-container-header-text">
+                    Вхід
+                </div>
+                <div class="general-container-header-arrow">
+                </div>							
+            </div>
+            <div class="general-container-body login-container-body">
+                <h:form>
+                    <div class="login-input-item">
+                        <span>Email:</span>
+                        <h:inputText value="#{loginController.email}" class="general-input login-input-field"/>						
+                    </div>
+                    <div class="login-input-item">
+                        <span>Пароль:</span>
+                        <h:inputSecret value="#{loginController.password}" class="general-input login-input-field"/>					
+                    </div>
+
+                    <div class="submit-login">
+                        <h:commandButton action="#{loginController.login()}" value="Надіслати" class="general-button"/>
+                        
+                    </div>
+
+                </h:form>
+            </div>							
+        </div>
+    </ui:define>
+
+</ui:composition>

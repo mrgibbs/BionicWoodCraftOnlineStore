@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/general_admin.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                >
+
+    <ui:define name="additional_meta_data">
+        <h:outputStylesheet library="css" name="cropper.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <h:outputStylesheet library="css" name="edit_product.css" />
+        <h:outputScript target="head">
+            $ = jQuery;
+        </h:outputScript>
+        <!--<script type="text/javascript" src="/BionicWoodCraftOnlineStore-web/javax.faces.resource/jquery.min.js.xhtml?ln=js"/>-->
+        <script type="text/javascript" src="/BionicWoodCraftOnlineStore-web/javax.faces.resource/cropper.js.xhtml?ln=js"/>
+        <script type="text/javascript" src="/BionicWoodCraftOnlineStore-web/javax.faces.resource/edit_product.js.xhtml?ln=js"/>
+        <!--<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />-->
+<!--        <h:outputScript library="js" name="jquery.min.js" target="head" 
+        <h:outputScript library="js" name="cropper.js" target="head" />
+        <h:outputScript library="js" name="edit_product.js" target="head" />-->
+        
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:include src="/WEB-INF/components/admin_components/admin_menu.xhtml"/>
+        <div class="admin-page-general-title">
+            Додати новий товар
+        </div>
+        <div class="product-page-divider">
+        </div>
+
+        <h:form id="product_form">
+            <div class="general-input-wrapper block-input-wrapper">
+                <div class="general-input-title">
+                    Назва:
+                </div>
+                <input type="text" class="general-input addproduct-input-field"/>
+                <div class="general-input-error-msg">Помилка</div>
+            </div>
+
+            <div class="general-input-wrapper block-input-wrapper">
+                <div class="general-input-title">
+                    Опис товару:
+                </div>
+                <h:inputTextarea styleClass="general-input addproduct-input-field addproduct-input-area"></h:inputTextarea>
+                <div class="general-input-error-msg">Помилка</div>
+            </div>
+            
+            <div class="general-input-wrapper block-input-wrapper">
+                <div class="general-input-title">
+                    Ціна:
+                </div>
+                <input type="text" class="general-input addproduct-input-field"/>
+                <div class="general-input-error-msg">Помилка</div>
+            </div>
+
+            <div class="general-input-wrapper block-input-wrapper">
+                <div class="general-input-title">
+                    Статус:
+                </div>
+                <p:selectOneMenu value="#{manageProductPageController.product.status}">
+                    <f:ajax event="change"
+                            listener="#{manageProductPageController.handler10}"/>
+                    <f:selectItems value="#{manageProductPageController.statuses}" var="status" itemValue="#{status}" itemLabel="#{status.labelUkr}"/>
+                </p:selectOneMenu>
+            </div>
+
+<!--            <div class="general-input-wrapper">
+                <div class="general-input-title">
+                    Виберіть категорію:
+                </div>
+                <h:selectOneMenu value="{manageProductPageController.currentCategory}">
+                    <f:selectItems value="{manageProductPageController.rootCategories}" var="category" itemValue="{category}" itemLabel="{category.nameUkr}"/>
+                </h:selectOneMenu>
+            </div>-->
+            
+            <div class="general-input-wrapper  block-input-wrapper">
+                <div class="general-input-title">
+                    Виберіть категорію:
+                </div>
+                
+                <h:panelGroup id="category-group">
+                    <ui:repeat value="#{manageProductPageController.categoryHierarchyManagers}"
+                               var="currentManager" varStatus="status">
+                        <div class="current-category-number">
+                            #{status.index + 1}:
+                        </div>
+                        <ui:repeat value="#{currentManager.displayLevels}"
+                                   var="currentDisplayLevel" >
+
+                        #{currentManager.setCurrentLevel(currentDisplayLevel)}
+                            <ui:fragment rendered="#{currentManager.listExistsAtLevel(currentDisplayLevel)}">
+
+                                <p:selectOneMenu value="#{currentManager.currentCategory}" 
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:ajax event="change" execute="@this" render=":product_form:category-group"
+                                            immediate="true" listener="#{currentManager.setCurrentLevel(currentDisplayLevel)}"/>
+                                    <f:selectItems value="#{currentManager.getListAtLevel(currentDisplayLevel)}" 
+                                                   var="category" itemValue="#{category}" itemLabel="#{category.nameUkr}"/>
+                                </p:selectOneMenu>
+                                <br/>
+
+
+                            </ui:fragment>
+
+
+                        </ui:repeat>
+                        <div class="category-sequence-wrapper">
+                            <ui:repeat value="#{currentManager.hierarchyList}"
+                                       var="currentCategory">
+                                -> #{currentCategory.nameUkr} 
+                            </ui:repeat>
+                        </div>
+                        <p:commandButton value="Видалити категорію" icon="ui-icon-close"
+                                update=":product_form:category-group" 
+                                action="#{manageProductPageController.removeCategoryHierarchyManager(currentManager)}"/>
+                        <div class="category-divider"></div>
+                        
+                    </ui:repeat>
+                    <p:commandButton value="Додати ще одну категорію" icon="ui-icon-plus" 
+                                     update=":product_form:category-group" 
+                                     action="#{manageProductPageController.addCategoryHierarchyManager()}"/>
+                    
+                    
+                </h:panelGroup>
+                
+            </div>
+
+            <div class="general-input-wrapper  block-input-wrapper">
+                <div class="general-input-title">
+                    Характеристики:
+                </div>
+                
+                <h:panelGroup id="features-group">
+                    <ui:repeat value="#{manageProductPageController.categoryHierarchyManagers}"
+                               var="currentManager" varStatus="status">
+                        <div class="current-category-number">
+                            #{status.index + 1}:
+                        </div>
+                        <ui:repeat value="#{currentManager.displayLevels}"
+                                   var="currentDisplayLevel" >
+
+                        #{currentManager.setCurrentLevel(currentDisplayLevel)}
+                            <ui:fragment rendered="#{currentManager.listExistsAtLevel(currentDisplayLevel)}">
+
+                                <p:selectOneMenu value="#{currentManager.currentCategory}" 
+                                                 converter="omnifaces.SelectItemsConverter">
+                                    <f:ajax event="change" execute="@this" render=":product_form:category-group"
+                                            immediate="true" listener="#{currentManager.setCurrentLevel(currentDisplayLevel)}"/>
+                                    <f:selectItems value="#{currentManager.getListAtLevel(currentDisplayLevel)}" 
+                                                   var="category" itemValue="#{category}" itemLabel="#{category.nameUkr}"/>
+                                </p:selectOneMenu>
+                                <br/>
+
+
+                            </ui:fragment>
+
+
+                        </ui:repeat>
+                        <div class="category-sequence-wrapper">
+                            <ui:repeat value="#{currentManager.hierarchyList}"
+                                       var="currentCategory">
+                                -> #{currentCategory.nameUkr} 
+                            </ui:repeat>
+                        </div>
+                        <p:commandButton value="Видалити категорію" icon="ui-icon-close"
+                                update=":product_form:category-group" 
+                                action="#{manageProductPageController.removeCategoryHierarchyManager(currentManager)}"/>
+                        <div class="category-divider"></div>
+                        
+                    </ui:repeat>
+                    <p:commandButton value="Додати ще одну категорію" icon="ui-icon-plus" 
+                                     update=":product_form:category-group" 
+                                     action="#{manageProductPageController.addCategoryHierarchyManager()}"/>
+                    
+                    
+                </h:panelGroup>
+                
+            </div>
+
+            
+            
+            <div class="general-input-wrapper  block-input-wrapper">
+                <div class="general-input-title">
+                    Завантажте основне фото:
+                </div>
+                <p:fileUpload fileUploadListener="#{manageProductPageController.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                              sizeLimit="#{initParam['upload_image_max_size']}" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                              oncomplete="changeImage()" update="replace_with"/>
+                 <!--update="main-image-cropping"--> 
+
+            
+            
+                 <div id="replace-url-trigger" class="set-hidden"></div>
+                 <h:outputText id="replace_with" value="/BionicWoodCraftOnlineStore-web#{manageProductPageController.mainPhotoFileUrl}"
+                               styleClass="set-hidden"/>
+
+                 <div class="image-cropper-wrapper undisplayed">
+                     <div class="image-region">
+
+                         <div class="eg-wrapper">
+                             <img src="#{resource['images:top_logo.png']}" id="header-logo" class="cropper" alt="Рівненська Майстерня"/>
+                         </div>
+
+                     </div>
+                     <div class="info-region">
+                         <div class="preview preview-md"></div>
+
+                         <div class="input-group">
+                             <span class="input-group-addon">X</span>
+                             <input class="form-control" id="dataX" type="text" placeholder="x"/>
+                             <span class="input-group-addon">px</span>
+                         </div>
+                         <div class="input-group">
+                             <span class="input-group-addon">Y</span>
+                             <input class="form-control" id="dataY" type="text" placeholder="y"/>
+                             <span class="input-group-addon">px</span>
+                         </div>
+                         <div class="input-group">
+                             <span class="input-group-addon">Width</span>
+                             <input class="form-control" id="dataWidth" type="text" placeholder="width"/>
+                             <span class="input-group-addon">px</span>
+                         </div>
+                         <div class="input-group">
+                             <span class="input-group-addon">Height</span>
+                             <input class="form-control" id="dataHeight" type="text" placeholder="height"/>
+                             <span class="input-group-addon">px</span>
+                         </div>
+
+                         
+                         <div class="crop-button-wrapper">
+                             <p:commandButton id="crop-button" icon="ui-icon-check" value="Обрізати"/>
+                         </div>
+
+
+
+                     </div>
+
+
+                 </div>
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            <pe:remoteCommand id="sendCropParametersCommand" name="sendCropParameters" process="@this" actionListener="#{manageProductPageController.setCropRegion}">  
+                <pe:methodSignature parameters="dev.mykhalko.WoodCraftOnlineStore.web.utils.helpers.CropRegion" />  
+
+                <pe:methodParam name="cropRegion">  
+                    <pe:convertJson />  
+                </pe:methodParam>  
+            </pe:remoteCommand>
+        </h:form>
+        
+        
+        
+        
+        
+        <div class="product-page-divider">
+
+        </div>
+        
+        
+
+        <div class="admin-order-change-status-wrapper">
+            <span>Змінити статус замовлення:</span>
+            <h:form>
+                <h:selectOneMenu value="#{adminOrderPageController.order.orderStatus}">
+                    <f:selectItems value="#{adminOrderPageController.statuses}" var="status" itemValue="#{status}" itemLabel="#{status.labelUkr}"/>
+                </h:selectOneMenu>
+                <h:commandButton action="#{adminOrderPageController.changeOrderStatus()}" value="Підтвердити" class="general-button"/>
+            </h:form>
+        </div>
+        
+         
+        
+    </ui:define>
+
+</ui:composition>

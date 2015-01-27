@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http:http://java.sun.com/jsf/core">
+            <div id="header-wrapper">
+		<div id="header" class="main_width">
+                    <ui:include src="/WEB-INF/components/top_logo.xhtml"/>
+                    
+                    <c:set var="search_block_style" value="header-search-usual"/>
+                    <c:if test="#{userManager.authenticated}">
+                        <c:set var="search_block_style" value="header-search-signed-in"/>
+                    </c:if>
+			<!-- Search Widget starts -->
+			<div id="header-search" class="#{search_block_style}">
+				<form id="header-search-form" method="get">
+                                    <input id="header-search-text" type="text" name="searchRequest" placeholder="Пошук"/>
+					<input id="header-search-submit" type="button" value=" " title="Пошук"/>
+				</form>
+			</div>
+			<!-- Search Widget ends -->
+
+			<!-- Account Widget starts -->
+                        <c:choose>
+                            <c:when test="#{userManager.authenticated}">
+                                
+                                <div class="header-account-info header-customer-widgets header-customer-widgets-signed">
+                                    <div class="header-acc-top header-acc-top-signed">
+                                        <div class="header-acc-img">
+
+                                        </div>					
+                                        <div class="header-greeting">
+                                            Привіт, #{userManager.customer.name} #{userManager.customer.surname}
+                                        </div>
+                                    </div>
+                                    <div class="header-acc-bottom header-acc-bottom-signed">
+                                        <h:form>
+                                            <h:commandButton value="Вийти" class="header-widgets-links header-widgets-links-signed" action="#{userManager.logout()}"/>
+                                        </h:form>
+                                    <!-- <a href="#{initParam['app_uri']}/logout" class="header-widgets-links">Вийти</a>-->
+                                    </div>
+                                </div>
+                                
+                                
+                            </c:when>
+                            <c:otherwise>
+                                
+                                
+                                <div class="header-account-info header-customer-widgets">
+                                    <div class="header-acc-top">
+                                        <div class="header-acc-img">
+
+                                        </div>					
+                                        <div class="header-greeting">
+                                            Привіт
+                                        </div>
+                                    </div>
+                                    <div class="header-acc-bottom">
+                                        <a href="#{initParam['app_uri']}/login" class="header-widgets-links">Увійти</a> | 
+                                        <a href="#{initParam['app_uri']}/signup" class="header-widgets-links">Реєстрація</a>
+                                    </div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                        
+			
+			<!-- Account Widget ends -->
+
+			<!-- Basket Widget starts -->
+			<div id="header-basket" class="header-customer-widgets">
+
+					<div id="header-basket-img">
+						  
+					</div>
+				<div id="header-basket-bottom">
+					<a href="#{initParam['app_uri']}/cart" class="header-widgets-links">Мій кошик</a>
+				</div>
+                            <c:if test="#{!customerShoppingCart.isCartEmpty()}">
+                                <div id="purchase-amount" class="set-visible">#{customerShoppingCart.totalProductsAmount}</div>
+                            </c:if>
+			</div>
+			<!-- Basket Widget ends -->
+                        
+		</div>
+		<div id="top-nav-wrapper">
+			<div id="top-nav" class="main_width">
+				<ul id="top-nav-list">
+                                  <li class="top-nav-item"><a href="#{initParam['app_uri']}/browse/dveri">Двері</a></li>
+				  <li class="top-nav-item"><a href="#{initParam['app_uri']}/browse/stoly">Столи</a></li>
+				  <li class="top-nav-item"><a href="#{initParam['app_uri']}/browse/shafy">Шафи</a></li>
+				  <li class="top-nav-item"><a href="#{initParam['app_uri']}/browse/komody">Комоди</a></li>
+				  <li class="top-nav-item"><a href="#{initParam['app_uri']}/browse/lizhka">Ліжка</a></li>
+				  <li class="top-nav-item"><a href="#{initParam['app_uri']}/browse/shody">Сходи</a></li>
+				  <li class="top-nav-item"><a href="#{initParam['app_uri']}/browse/sad">Сад</a></li>
+				  <li class="top-nav-item"><a href="#{initParam['app_uri']}/browse/inshe" id="last-top-nav-item">Інше</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</ui:composition>

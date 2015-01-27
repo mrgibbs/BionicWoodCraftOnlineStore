@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/WEB-INF/templates/general_header_footer.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="additional_meta_data">
+    </ui:define>
+    <ui:define name="content">
+        <div class="product-page-wrapper">
+            <div class="product-header">
+                #{productPageController.currentProduct.name}
+            </div>
+            <div class="product-page-divider">
+
+            </div>
+            <div class="product-photo-and-description">
+                <div class="product-main-photo">
+                    <c:set var="img_path" value="#{initParam['product_images_loc']}#{productPageController.currentProduct.mainPhoto.getSquare400pxPhotoFile().fileName}"/>
+                    <h:graphicImage value="#{img_path}" alt="#{productPageController.currentProduct.mainPhoto.photoName}"/>
+
+                </div>
+                <div class="product-description-and-price">
+                    <!-- <p class="testing"> -->
+                    <h3 class="product-description-title">Опис товару:</h3> 
+                    <p class="product-description">#{productPageController.currentProduct.description}</p>
+
+                    <div class="product-page-features-wrapper">
+                        <p class="product-features-title">Характеристики:</p>
+                        <div class="product-features">
+                            <ui:repeat value="#{productPageController.currentProduct.productFeatureList}" var="productFeature">
+                                #{productFeature.feature.name}: #{productFeature.value}<br/>
+                            </ui:repeat>
+                        </div>
+                    </div>
+
+                    <div class="product-price-wrapper">
+                        <span class="product-page-price-title">Ціна:</span><span class="product-page-price-number"> #{productPageController.priceFormatted} грн</span>
+                    </div>
+
+                    <div class="product-page-buy-wrapper">
+                        <h:form id="product-page-add-to-basket">
+                            <span>Кількість:</span>
+                            <h:inputText id="quantity" value="#{customerShoppingCart.currentProductAmount}" class="product-page-buy-quantity"/>
+                            <h:commandButton id="submit" action="#{customerShoppingCart.addItemToShoppingCart()}" actionListener="#{customerShoppingCart.attrListener}" value="Додати до кошика" class="product-page-buy-button">
+                                <f:attribute name="currentProduct" value="#{productPageController.currentProduct}"/>
+                            </h:commandButton>
+                        </h:form>
+                        
+<!--                        <form action="add_to_cart">
+                            <span>Кількість:</span>
+                            <input type="text" name="quantity" value="1" class="product-page-buy-quantity" />
+                            <input type="submit" value="Додати до кошика" class="product-page-buy-button" />
+                        </form>-->
+                    </div>
+
+                    <!-- </p> -->
+
+                </div>
+
+            </div>
+            <div class="product-page-divider">
+
+            </div>
+
+        </div>
+    </ui:define>
+</ui:composition>

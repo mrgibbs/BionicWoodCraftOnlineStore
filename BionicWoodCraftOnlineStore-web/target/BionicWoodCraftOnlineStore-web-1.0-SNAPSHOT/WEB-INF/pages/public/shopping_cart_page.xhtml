@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/WEB-INF/templates/general_header_footer.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="additional_meta_data">
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="product-page-wrapper">
+            <div class="product-header">
+                Ваш кошик
+            </div>
+            <div class="product-page-divider">
+            </div>
+
+            <table class="cart-items-table">
+                <tr class="cart-items-table-header-row">
+                    <th class="cart-items-table-number-column">Номер</th>
+                    <th class="cart-items-table-product-column">Назва товару</th>
+                    <th class="cart-items-table-amount-column">Кількість</th>
+                    <th class="cart-items-table-price-column">Ціна за одиницю</th>
+                    <th class="cart-items-table-subtotal-price-column">Сума</th>
+                    <th class="cart-items-table-update-column">Оновити</th>
+                </tr>
+                
+                <c:forEach items="#{customerShoppingCart.orderLines}" var="line" varStatus="status">
+<!--                <ui:repeat value="#{customerShoppingCart.orderLines}" var="line" varStatus="status">-->
+                    <tr class="cart-items-table-usual-row">
+                    <h:form id="line#{status.index + 1}">
+                        <td class="cart-items-table-number-column">#{status.index + 1}</td>
+                        <td class="cart-items-table-product-column"><a href="#{initParam['app_uri']}/product/#{line.product.id}">#{line.product.name}</a></td>
+                        <td class="cart-items-table-amount-column">
+                        <h:inputText value="#{line.amount}" class="cart-item-quantity general-input"/></td>
+                        <td class="cart-items-table-price-column">#{line.product.price}</td>
+                        <td class="cart-items-table-subtotal-price-column">#{line.product.price * line.amount}</td>
+                        <td class="cart-items-table-update-column"><h:commandButton value="оновити" action="#{customerShoppingCart.update()}" class="cart-item-update-button general-button"/></td>
+                    </h:form> 
+                    </tr>
+<!--                </ui:repeat>-->
+                </c:forEach>
+
+            </table>
+            
+            <div class="cart-page-total">
+                <span class="cart-page-total-label">Всього:</span> #{customerShoppingCart.totalPrice} грн
+            </div>
+
+            <div class="product-page-divider"></div>
+
+            <div class="cart-page-confirm">
+                <h:form>
+                    <h:commandButton action="#{shoppingCartPageController.checkout()}" value="Підтвердити замовлення" class="general-button"/>
+                </h:form>
+<!--                <form action="">
+                    <input type="submit" value="Підтвердити замовлення" class="general-button"/>
+                </form>-->
+            </div>
+
+
+
+        </div>
+    </ui:define>
+
+</ui:composition>

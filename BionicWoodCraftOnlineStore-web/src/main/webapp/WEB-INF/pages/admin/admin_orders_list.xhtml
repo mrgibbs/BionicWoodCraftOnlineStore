@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/general_admin.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="additional_meta_data">
+        
+    </ui:define>
+
+    <ui:define name="content">
+        
+        <div class="admin-page-content-wrapper">
+            <ui:include src="/WEB-INF/components/admin_components/admin_menu.xhtml"/>   
+            <div class="admin-page-general-title">
+                #{ordersManagementController.pageHeader}
+            </div>
+            <div class="product-page-divider"></div>
+            <table class="orders-table-admin">
+                <tr>
+                    <th class="orders-table-admin-id-column">Номер</th>
+                    <th class="orders-table-admin-date-column">Дата</th>
+                    <th class="orders-table-admin-status-column">Статус</th>
+                    <th class="orders-table-admin-total-column">Сума</th>
+                    <th class="orders-table-admin-customer-column">Замовник</th>
+                    <th class="orders-table-admin-view-column">Детальніше</th>				
+                </tr>
+                <c:forEach var="order" items="#{ordersManagementController.orders}" varStatus="iter_status">
+                    <tr>
+                        <td class="orders-table-admin-id-column">#{order.id}</td>
+                        <td class="orders-table-admin-date-column">#{order.dateCreated.date}.#{order.dateCreated.month}.#{order.dateCreated.year + 1900} </td>
+                        <td class="orders-table-admin-status-column">#{order.orderStatus.labelUkr}</td>
+                        <td class="orders-table-admin-total-column">#{order.totalSum}</td>
+                        <td class="orders-table-admin-customer-column">#{order.customer.name} #{order.customer.surname}</td>
+                        <td class="orders-table-admin-view-column"><form action="#{initParam['app_uri']}/admin/order/#{order.id}" method="get"><input type="submit" class="general-button" value="Детальніше"/></form></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+    </ui:define>
+
+</ui:composition>

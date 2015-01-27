@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http:http://java.sun.com/jsf/core">
+    
+    <div id="subcategories-aside" class="general-container general-aside-component">
+        <!-- aside subcategories container header starts -->
+        <div class="general-container-header">
+            <div class="general-container-header-text">
+                Підкатегорії
+            </div>
+            <div class="general-container-header-arrow">
+                
+            </div>
+
+        </div>
+        <!-- aside subcategories  container header ends -->
+
+        <!-- aside subcategories body start -->
+        <div class="general-container-body">
+            <ul class="subcat-aside-list">
+                <ui:repeat value="#{browseController.subCategories}" var="subcat">
+                    <li class="subcat-aside-list-item"><a href="#{initParam['app_uri']}#{browseController.currentCategoryLink}/#{subcat.nameEng}">#{subcat.nameUkr}</a></li>
+                </ui:repeat>
+            </ul>
+
+
+        </div>
+        <!-- aside subcategories body end -->
+
+    </div>
+    
+</ui:composition>
+

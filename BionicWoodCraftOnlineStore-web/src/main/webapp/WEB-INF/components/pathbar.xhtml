@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http:http://java.sun.com/jsf/core">
+    <div id="path_bar">
+        <ul id="path_bar_list">
+            <li id="path_bar_home"><a href="#{initParam['app_uri']}/home"><img src="#{resource['images/path_bar/home.png']}" alt="home_img"/></a></li>
+            <ui:repeat value="#{browseController.pathBarElementsList}" var="current_element">
+                <li><a href="#{initParam['app_uri']}#{current_element.link}">#{current_element.labelUkr}</a></li>
+            </ui:repeat>
+        </ul>
+    </div>
+    
+</ui:composition>
+

@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="imageLocation"/>
+        <cc:attribute name="productTitle"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div class="sell-list-item">
+            <div class="sell-list-item-photo">
+                <img src="#{cc.attrs.imageLocation}" alt="item1"/>
+            </div>
+            <div class="sell-list-item-title">
+                #{cc.attrs.productTitle}
+            </div>
+            <div class="sell-list-item-select">
+                <a href="#item1">Детальніше</a>
+            </div>
+        </div>
+    </cc:implementation>
+</html>

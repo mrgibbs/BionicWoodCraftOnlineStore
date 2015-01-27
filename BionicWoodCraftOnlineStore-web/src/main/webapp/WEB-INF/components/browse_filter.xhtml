@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http:http://java.sun.com/jsf/core">
+    
+    <div id="filter-aside" class="general-container general-aside-container">
+        <!-- filter container header starts -->
+        <div class="general-container-header">
+            <div class="general-container-header-text">
+                Фільтрувати
+            </div>
+            <div class="general-container-header-arrow">
+
+            </div>
+
+        </div>
+        <!-- filter container header ends -->
+
+        <!-- filter container options start -->
+        <div class="general-container-body">
+
+
+            <div class="filter-options">
+                <form action="filter_items" method="get">
+                    <div class="filter-suboption">
+                        <div class="filter-suboption-title">
+                            За ціною
+                        </div>
+                        <div class="filter-suboption-variants">
+                            <ul>
+                                <li><input type="checkbox" /><span>Дорогі</span></li>
+                                <li><input type="checkbox" /><span>Середні</span></li>
+                                <li><input type="checkbox" /><span></span>Дешеві</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="filter-suboption">
+                        <div class="filter-suboption-title">
+                            За матеріалом
+                        </div>
+                        <div class="filter-suboption-variants">
+                            <ul>
+                                <li><input type="checkbox" /><span>Дуб</span></li>
+                                <li><input type="checkbox" /><span>Сосна</span></li>
+                                <li><input type="checkbox" /><span></span>Липа</li>
+                                <li><input type="checkbox" /><span></span>Клен</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <input type="submit" id="apply_filter_button" value="Застосувати" />
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</ui:composition>
+

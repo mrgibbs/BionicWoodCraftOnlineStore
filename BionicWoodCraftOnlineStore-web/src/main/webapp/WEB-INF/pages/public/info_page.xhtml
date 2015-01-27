@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/WEB-INF/templates/general_header_footer.xhtml">
+
+    <ui:define name="additional_meta_data">
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="general-container general-message-container">
+            <div class="general-container-header">
+                <div class="general-container-header-text">
+
+                </div>
+                <div class="general-container-header-arrow">
+                </div>							
+            </div>
+            <div class="general-container-body general-message-container-body">
+                <div class="general-message-wrapper">
+                    
+                    <div class="general-message-icon-wrapper">
+                        <c:set var="image_location" value="images/info_page_icons/#{infoPageController.infoPageLowerCase}_icon.png"/>
+                        <image src="#{resource[image_location]}" alt="#{infoPageController.infoPageType} icon"/>
+                    </div>
+                    <div class="general-message-text-wrapper">
+                        #{infoPageController.message}
+                    </div>
+                </div>
+
+            </div>							
+        </div>
+    </ui:define>
+
+</ui:composition>

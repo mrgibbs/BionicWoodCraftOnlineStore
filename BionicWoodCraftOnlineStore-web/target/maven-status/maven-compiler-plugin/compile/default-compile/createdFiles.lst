@@ -1,0 +1,16 @@
+dev/mykhalko/WoodCraftOnlineStore/web/utils/CustomerShoppingCart.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/admin/ManageProductPageController.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/BrowseController.class
+dev/mykhalko/WoodCraftOnlineStore/web/utils/PathIdentifier.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/ProductPageController.class
+dev/mykhalko/WoodCraftOnlineStore/web/controllers/UserManager.class
+dev/mykhalko/WoodCraftOnlineStore/web/utils/helpers/HashEncoder.class
+dev/mykhalko/WoodCraftOnlineStore/web/utils/helpers/PathBarElement.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/ShoppingCartPageController.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/LoginController.class
+dev/mykhalko/WoodCraftOnlineStore/web/utils/helpers/ConfirmPasswordValidator.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/InfoPageController.class
+dev/mykhalko/WoodCraftOnlineStore/web/utils/helpers/InfoPageType.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/admin/OrdersManagementController.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/SignUpController.class
+dev/mykhalko/WoodCraftOnlineStore/web/pagecontrollers/admin/AdminOrderPageController.class

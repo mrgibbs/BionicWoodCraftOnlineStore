@@ -1,0 +1,31 @@
+<ui:composition template="/WEB-INF/templates/general_browse.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:composite_components="http://java.sun.com/jsf/composite/composite_components">
+            <ui:define name="additional_meta_data">
+            </ui:define>
+
+            <ui:define name="products">
+                <ui:repeat value="#{browseController.products}" var="product">
+                    
+                    <div class="sell-list-item">
+                        <c:set var="product_link" value="#{initParam['app_uri']}#{initParam['product_url_prefix']}/#{product.id}"/>
+                        <div class="sell-list-item-photo">
+                            <c:set var="img_path" value="#{initParam['product_images_loc']}#{product.mainPhoto.getSquare200pxPhotoFile().fileName}"/>
+                            <a href="#{product_link}"><h:graphicImage value="#{img_path}" alt="#{product.mainPhoto.photoName}"/></a>
+                        </div>
+                        <div class="sell-list-item-title">
+                            #{product.name}
+                        </div>
+                        <div class="sell-list-item-select">
+                            <a href="#{product_link}">Детальніше</a>
+                        </div>
+                    </div>
+                    
+                </ui:repeat>
+            </ui:define>
+
+</ui:composition>

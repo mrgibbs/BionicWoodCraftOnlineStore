@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http:http://java.sun.com/jsf/core">
+    <div class="admin-menu">
+        <ul>
+            <li><a href="#{initParam['app_uri']}/admin/orders/all">Всі замовлення</a></li>
+            <li><a href="#{initParam['app_uri']}/admin/orders/unviewed">Нові замовлення</a></li>
+            <li><a href="#{initParam['app_uri']}/admin/orders/viewed">Переглянуті замовлення</a></li>
+        </ul>
+    </div>
+    
+</ui:composition>

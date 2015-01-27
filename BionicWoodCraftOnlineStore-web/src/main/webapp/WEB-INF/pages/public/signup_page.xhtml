@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/templates/general_header_footer.xhtml">
+
+    <ui:define name="additional_meta_data">
+    </ui:define>
+
+    <ui:define name="content">
+        
+       
+        
+        <div class="general-container signup-container">
+            <div class="general-container-header">
+                <div class="general-container-header-text">
+                    Реєстрація
+                </div>
+                <div class="general-container-header-arrow">
+                </div>							
+            </div>
+            <div class="general-container-body signup-container-body">
+                <h:form id="signup-form">
+                    
+                    
+                    <div class="signup-input-field-item">
+                        <span class="signup-field-label">Ім'я:</span>
+                        <h:inputText value="#{signUpController.customer.name}" id="nameField" styleClass="general-input signup-input-field #{component.valid ? '' : 'general-input-error'}">
+                            <f:ajax event="blur" execute="nameField" render="nameField nameErrorMsg"/>
+                        </h:inputText>
+                        <h:message id="nameErrorMsg" styleClass="signup-error-hint" for="nameField"/>					
+                    </div>
+                    <div class="signup-input-field-item">
+                        <span class="signup-field-label">Прізвище:</span>
+                        <h:inputText value="#{signUpController.customer.surname}" id="surnameField" styleClass="general-input signup-input-field #{component.valid ? '' : 'general-input-error'}">
+                            <f:ajax event="blur" execute="surnameField" render="surnameField surnameErrorMsg"/>
+                        </h:inputText>
+                        <h:message id="surnameErrorMsg" styleClass="signup-error-hint" for="surnameField"/>					
+                    </div>
+                    <div class="signup-input-field-item">
+                        <span class="signup-field-label">Пароль:</span>
+                        <h:inputSecret redisplay="true" value="#{signUpController.source_password}" id="passField" styleClass="general-input signup-input-field #{component.valid ? '' : 'general-input-error'}">
+                            <f:ajax event="blur" execute="passField" render="passField passErrorMsg"/>
+                        </h:inputSecret>
+                        <h:message id="passErrorMsg" styleClass="signup-error-hint" for="passField"/>					
+                    </div>
+                    <div class="signup-input-field-item">
+                        <span class="signup-field-label">Повторіть пароль:</span>
+                        <h:inputSecret validator="#{signUpController.passVerification}" redisplay="true" value="#{signUpController.source_password_repeat}" id="pass2Field" styleClass="general-input signup-input-field #{component.valid ? '' : 'general-input-error'}">
+                            <f:ajax event="blur" execute="pass2Field" render="pass2Field pass2ErrorMsg"/>                            
+                        </h:inputSecret>
+                        <h:message id="pass2ErrorMsg" styleClass="signup-error-hint" for="pass2Field"/>						
+                    </div>
+                    <div class="signup-input-field-item">
+                        <span class="signup-field-label">E-mail:</span>
+                        <h:inputText value="#{signUpController.customer.email}" id="emailField" styleClass="general-input signup-input-field #{component.valid ? '' : 'general-input-error'}">
+                            <f:ajax event="blur" execute="emailField" render="emailField emailErrorMsg"/>
+                        </h:inputText>
+                        <h:message id="emailErrorMsg" styleClass="signup-error-hint" for="emailField"/>						
+                    </div>
+                    <div class="signup-input-field-item">
+                        <span class="signup-field-label">Номер телефону:</span>
+                        <h:inputText value="#{signUpController.customer.phone}" id="phoneField" styleClass="general-input signup-input-field #{component.valid ? '' : 'general-input-error'}">
+                            <f:ajax event="blur" execute="phoneField" render="phoneField phoneErrorMsg"/>
+                        </h:inputText>
+                        <h:message id="phoneErrorMsg" styleClass="signup-error-hint" for="phoneField"/>							
+                    </div>
+                    
+                       
+                    
+                    <div class="submit-signup">
+                        <h:commandButton action="#{signUpController.signUp()}" value="Надіслати" styleClass="general-button" />
+                    </div>
+
+                </h:form>
+            </div>							
+        </div>
+    </ui:define>
+
+</ui:composition>

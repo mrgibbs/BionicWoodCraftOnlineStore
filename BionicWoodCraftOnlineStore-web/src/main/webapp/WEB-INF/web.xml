@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    
+    
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>/home</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>app_uri</param-name>
+        <param-value>/BionicWoodCraftOnlineStore-web</param-value>
+    </context-param>
+    <context-param>
+        <param-name>jsf_pages_root</param-name>
+        <param-value>/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>product_url_prefix</param-name>
+        <param-value>/product</param-value>
+    </context-param>
+<!--    <context-param>
+        <param-name>photo_files_directory</param-name>
+        <param-value>images/product_photos</param-value>
+    </context-param>
+    <context-param>
+        <param-name>temp_files_resource_directory</param-name>
+        <param-value>images/temp/</param-value>
+    </context-param>-->
+    <context-param>
+        <param-name>external_resources_dir</param-name>
+        <param-value>/var/www/webapp/wcos/rsrc/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>external_temp_files_dir</param-name>
+        <param-value>/var/www/webapp/wcos/rsrc/temp/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>external_temp_files_loc</param-name>
+        <param-value>/rsrc/temp/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>product_images_loc</param-name>
+        <param-value>/rsrc/images/product_images/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>upload_image_max_size</param-name>
+        <param-value>5000000</param-value>
+    </context-param>
+    
+    
+    
+    
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>secured</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+ 
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+ 
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+ 
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>file</realm-name>
+    </login-config>
+ 
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+ 
+
+    
+    <!--PrimeFaces file upload start-->
+    <context-param>
+        <param-name>primefaces.UPLOADER</param-name>
+        <param-value>commons</param-value>
+    </context-param>
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <!--PrimeFaces file upload end-->
+    
+    
+    
+</web-app>
